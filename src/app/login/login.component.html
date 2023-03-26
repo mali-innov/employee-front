@@ -1,0 +1,37 @@
+<p-toast position="top-right"></p-toast>
+
+<div class="flex align-items-center justify-content-center bg-cyan-100 h-full">
+
+  <p-card styleClass="p-2 shadow-1 md:shadow-5">
+    <ng-template pTemplate="header">
+      <h1 class="border-bottom-3 border-cyan-500 text-3xl font-normal text-center">EMPLOYEE</h1>
+      <p>Connectez-vous !</p>
+    </ng-template>
+
+    <form [formGroup]="loginForm" class="formgrid grid flex-column p-fluid">
+      <div class="form-outline">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput type="text" autocomplete="nope" placeholder="Nom d'utilisateur" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Mot de passe</mat-label>
+          <input formControlName="password" matInput type="password" placeholder="Mot de passe" />
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="text-center">
+        <button pButton icon="pi pi-sign-in" class="p-button-raised bg-cyan-500 border-cyan-500" label="Se connecter"
+          (click)="login()" *ngIf="!connecting"></button>
+        <button pButton class="p-button-raised bg-cyan-500 border-cyan-500" label="Se connecter" (click)="login()"
+          *ngIf="connecting">
+        </button>
+      </div>
+    </form>
+  </p-card>
+</div>

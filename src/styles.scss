@@ -1,0 +1,97 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~node_modules/primeflex/primeflex.css';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #293240;
+  text-align: left;
+  background-color: #f0f2f8;
+}
+
+a {
+  color: #7267EF;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #7267EF;
+  text-decoration: underline;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:not([href]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: inherit;
+}
+
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+button {
+  border-radius: 0;
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+.p-element {
+  margin-bottom: 10px;
+}
+
+.p-megamenu-root-list {
+  padding-top: 100px !important;
+
+  span {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,141 @@
+<div class="container-fluid mt-2">
+    <button mat-raised-button class="col-lg-4 text-light mb-1" (click)="addEmployee()"
+        [ngStyle]="{'background-color': '#4fb8db'}">
+        Ajouter un employé(e)
+    </button>
+
+    <p-table #dt responsiveLayout="scroll" [value]="employees" [paginator]="true" [rows]="5"
+        [globalFilterFields]="['firstName', 'lastName']" *ngIf="!loadingList">
+        <ng-template pTemplate="caption">
+            <div class="d-flex justify-content-between">
+                <span>Liste des employé(e)s</span>
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input [(ngModel)]="searchInput" pInputText type="text"
+                        (input)="dt.filterGlobal(searchInput, 'contains')" placeholder="Entrez un nom" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Téléphone</th>
+                <th>Poste</th>
+                <th>Salaire de base</th>
+                <th>Etat</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employee let-columns="columns">
+            <tr>
+                <td>{{employee?.firstName}}</td>
+                <td>{{employee?.lastName}}</td>
+                <td>{{employee?.phoneNumber}}</td>
+                <td>{{employee?.post?.name}}</td>
+                <td>{{employee?.basicSalary | currency: 'CFA'}}</td>
+                <td>{{employee?.state}}</td>
+                <td>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item pButton type="button" class="p-button-text p-button-warning"
+                            label="Modifier" icon="pi pi-user-edit" (click)="updateEmployee(employee)"></button>
+
+
+                        <button mat-menu-item pButton type="button" label="Activer" class="p-button-text"
+                            [ngStyle]="{'color': '#4fb8db'}" icon="pi pi-lock-open"
+                            (click)="updateEmployeeState('Activate', employee)"
+                            *ngIf="employee?.state === 'Deactivate'"></button>
+
+                        <button mat-menu-item pButton type="button" label="Desactiver" class="p-button-text"
+                            color="warning" icon="pi pi-lock" (click)="updateEmployeeState('Deactivate', employee)"
+                            *ngIf="employee?.state === 'Activate'"
+                            [ngStyle]="{'color': '#4fb8db', 'border-color': '#4fb8db'}"></button>
+
+                        <button mat-menu-item pButton type="button" label="Supprimer"
+                            class="p-button-text p-button-danger" color="danger" icon="pi pi-trash"
+                            (click)="updateEmployeeState('Deleted', employee)" *ngIf="!updatingState"></button>
+
+                        <button mat-menu-item pButton type="button" label="Supprimer"
+                            class="p-button-text p-button-danger" color="danger" icon="pi pi-spin pi-spinner"
+                            *ngIf="updatingState"></button>
+
+                    </mat-menu>
+                    <button #btn type="button" [ngStyle]="{'background-color': '#4fb8db', 'border-color': '#4fb8db'}"
+                        pButton icon="pi pi-cog" [matMenuTriggerFor]="menu" pTooltip="Options"
+                        tooltipPosition="left"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+    <!-- While loading data -->
+
+    <p-table responsiveLayout="scroll" [value]="[{}, {}, {}, {}, {}]" [paginator]="true" [rows]="5" *ngIf="loadingList">
+        <ng-template pTemplate="caption">
+            Liste des employé(e)s
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Téléphone</th>
+                <th>Poste</th>
+                <th>Salaire de base</th>
+                <th>Etat</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employee let-columns="columns">
+            <tr>
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog [modal]="true" [autoZIndex]="false" position="right" [(visible)]="displayUpdate" [style]="{width: '70%'}">
+        <ng-template pTemplate="body">
+            <app-update-employee [employee]="employeeToUpdate"></app-update-employee>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog [modal]="true" [autoZIndex]="false" position="right" (onHide)="allEmployee()" [(visible)]="displayAdd"
+        [style]="{width: '70%'}">
+        <ng-template pTemplate="header">
+            <h2 [ngStyle]="{'color': '#4fb8db'}">Ajouter un(e) employé(e)</h2>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <app-add-employee></app-add-employee>
+        </ng-template>
+    </p-dialog>
+
+</div>
+
+<p-toast key="infos" position="top-right"></p-toast>

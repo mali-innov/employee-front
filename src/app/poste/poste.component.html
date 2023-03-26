@@ -1,0 +1,108 @@
+<div class="container pt-4">
+    <div class="container mb-1" *ngIf="!showPosteForm">
+        <button pButton type="button" label="Ajouter un poste" class="p-button-raised text-light"
+            icon="pi pi-plus-circle" [ngStyle]="{'background-color': '#4fb8db', 'border-color': '#4fb8db'}"
+            (click)="showPosteForm = true">
+        </button>
+    </div>
+    <form [formGroup]="posteForm" class="container mb-1" *ngIf="showPosteForm">
+        <div class="d-flex align-items-center justify-content-between">
+            <span class="p-float-label">
+                <input id="float-input" formControlName="name" type="text" pInputText>
+                <label for="float-input">Nom du poste</label>
+            </span>
+            <p-dropdown formControlName="service" [options]="services" placeholder="Choisissez un service"
+                optionLabel="name" [showClear]="true">
+            </p-dropdown>
+            <button pButton type="button" label="Enregistrer" class="p-button-raised text-light" icon="pi pi-save"
+                [ngStyle]="{'background-color': '#4fb8db', 'border-color': '#4fb8db'}" *ngIf="!saving"
+                (click)="addPoste()">
+            </button>
+            <button pButton type="button" label="Enregistrer" class="p-button-raised text-light"
+                icon="pi pi-spin pi-spinner" [ngStyle]="{'background-color': '#4fb8db', 'border-color': '#4fb8db'}"
+                *ngIf="saving">
+            </button>
+            <button pButton class="p-button-raised p-button-danger" icon="pi pi-times" type="button" label="Fermer"
+                (click)="showPosteForm = false">
+            </button>
+        </div>
+    </form>
+
+    <p-table [value]="postes" dataKey="id" editMode="row" responsiveLayout="scroll" [paginator]="true" [rows]="5"
+        *ngIf="!loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nom</th>
+                <th>Status</th>
+                <th>Options</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-poste let-editing="editing">
+            <tr [pEditableRow]="poste">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="poste.name">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{poste?.name}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <ng-template pTemplate="input">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Etat</mat-label>
+                            <mat-select placeholder="Etat" [(ngModel)]="poste.state" [value]="poste?.state">
+                                <mat-option *ngFor="let state of ['Activate', 'Deactivate']" [value]="state">
+                                    {{ state }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{ poste?.state }}
+                    </ng-template>
+                </td>
+                <td style="text-align:center">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        (click)="onRowEditSave(poste)"
+                        class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- When loading -->
+
+    <p-table [value]="[{}, {}, {}, {}, {}]" dataKey="id" editMode="row" responsiveLayout="scroll" [paginator]="true"
+        [rows]="5" *ngIf="loading">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nom</th>
+                <th>Services</th>
+                <th>Status</th>
+                <th>Options</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-service let-editing="editing">
+            <tr [pEditableRow]="service">
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+                <td>
+                    <p-skeleton width="90%" height="2rem"></p-skeleton>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+<p-toast key="infos" position="top-right"></p-toast>

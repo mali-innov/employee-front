@@ -1,0 +1,44 @@
+<mat-sidenav-container class="example-container" autosize>
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="p-3">
+        <app-navbar (menuIndex)="switchMemu($event)">
+        </app-navbar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar [ngStyle]="{'background-color': '#4fb8db'}">
+            <mat-toolbar-row class="d-flex align-items-center justify-content-between">
+                <span>
+                    <i class="pi pi-bars text-light m-1" (click)="sidenav.toggle()" role="button"></i>
+                    <strong class="text-light" *ngIf="!opened">EMPLOYEE</strong>
+                </span>
+
+                <span class="d-flex align-items-center justify-content-between">
+
+                    <strong class="text-white m-3">{{admin?.firstName }}
+                        {{admin?.lastName}}</strong>
+                    <div class="m-3" role="button" [matMenuTriggerFor]="menu">
+                        <img src="../../assets/img/default-profile-picture.png" width="32" height="32"
+                            class="rounded-circle bg-white">
+                        <i class="pi pi-angle-down text-white"></i>
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item routerLink="/admin-profile">
+                            <i class="pi pi-user m-1"></i>
+                            <span>Profile</span>
+                        </button>
+                        <button mat-menu-item color="danger" (click)="logOut()">
+                            <i class="fa fa-sign-out m-1"></i>
+                            <span>Deconnexion</span>
+                        </button>
+                    </mat-menu>
+                </span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        <app-list-employee *ngIf="menuIndex === 'employees_list'"></app-list-employee>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<p-toast key="home-page" position="top-right"></p-toast>

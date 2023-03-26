@@ -1,0 +1,292 @@
+<div class="container">
+    <h1 class="text-center text-primary">Modification des informations de l'employé(e) {{employee?.firstName}}
+        {{employee?.lastName}}
+    </h1>
+    <form [formGroup]="employeeForm">
+        <div class="row" *ngIf="!loadingContent">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Prenom</mat-label>
+                    <input formControlName="firstName" matInput placeholder="Prenom" />
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nom</mat-label>
+                    <input formControlName="lastName" matInput placeholder="Nom" />
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Genre</mat-label>
+                    <mat-select formControlName="gender" placeholder="Genre">
+                        <mat-option value="MALE">Homme</mat-option>
+                        <mat-option value="FEMALE">Femme</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date de naissance</mat-label>
+                    <input [matDatepicker]="dateOfBirth" matInput="date" formControlName="dateOfBirth"
+                        placeholder="Date de naissance" />
+                    <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+                    <mat-datepicker #dateOfBirth></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Lieu de naissance</mat-label>
+                    <input formControlName="placeOfBirth" matInput placeholder="Lieu de naissance" />
+                    <mat-icon matSuffix>home</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Adresse</mat-label>
+                    <input formControlName="address" matInput placeholder="Adresse" />
+                    <mat-icon matSuffix>home</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Numéro de téléphone</mat-label>
+                    <input formControlName="phoneNumber" matInput placeholder="Numéro de téléphone" />
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput placeholder="Email" />
+                    <mat-icon matSuffix>mail</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero matricule</mat-label>
+                    <input formControlName="matricule" matInput placeholder="Numero matricule" />
+                    <mat-icon matSuffix>payment</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Salaire de base</mat-label>
+                    <input formControlName="basicSalary" matInput placeholder="Salaire de base" />
+                    <mat-icon matSuffix>payment</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Situation matrimonial</mat-label>
+                    <mat-select formControlName="maritalStatus" placeholder="Situation matrimonial">
+                        <mat-option value="MARRIED">Marié(e)</mat-option>
+                        <mat-option value="SINGLE">Celibataire</mat-option>
+                        <mat-option value="DIVORCED">Divorcé(e)</mat-option>
+                        <mat-option value="WIDOWER">Veuf(ve)</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre d'enfants</mat-label>
+                    <mat-select formControlName="numberOfChildren" placeholder="Nombre d'enfants">
+                        <mat-option [value]="i" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{i}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Poste</mat-label>
+                    <mat-select formControlName="post" placeholder="Poste">
+                        <mat-option *ngFor="let post of posts" [value]="{ id: post }">{{ post?.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Grade</mat-label>
+                    <mat-select formControlName="grade" placeholder="Grade">
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                        <mat-option value="C">C</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Categorie</mat-label>
+                    <mat-select formControlName="category" placeholder="Categorie">
+                        <mat-option value="1">1 er </mat-option>
+                        <mat-option [value]="i" *ngFor="let i of [2, 3, 4, 5, 6, 7, 9, 10, 11, 12]">{{ i }} ème
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date d'embauche</mat-label>
+                    <input [matDatepicker]="hireDate" matInput="date" formControlName="hireDate"
+                        placeholder="Date d'embauche" />
+                    <mat-datepicker-toggle matSuffix [for]="hireDate"></mat-datepicker-toggle>
+                    <mat-datepicker #hireDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Mot de passe</mat-label>
+                    <input formControlName="password" matInput type="password" placeholder="Mot de passe" />
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Content while loading data -->
+
+        <div class="row" *ngIf="loadingContent">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Prenom</mat-label>
+                    <input matInput placeholder="Prenom" />
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nom</mat-label>
+                    <input matInput placeholder="Nom" />
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero matricule</mat-label>
+                    <input matInput placeholder="Numero matricule" />
+                    <mat-icon matSuffix>payment</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Numéro de téléphone</mat-label>
+                    <input matInput placeholder="Numéro de téléphone" />
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Adresse</mat-label>
+                    <input matInput placeholder="Adresse" />
+                    <mat-icon matSuffix>home</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Salaire de base</mat-label>
+                    <input matInput placeholder="Salaire de base" />
+                    <mat-icon matSuffix>payment</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre d'enfants</mat-label>
+                    <mat-select placeholder="Nombre d'enfants">
+                        <mat-option [value]="i" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">{{i}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Postes</mat-label>
+                    <mat-select placeholder="Poste">
+                        <mat-option></mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Situation matrimonial</mat-label>
+                    <mat-select placeholder="Situation matrimonial">
+                        <mat-option value="MARRIED">MARRIED</mat-option>
+                        <mat-option value="SINGLE">SINGLE</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Categorie / Grade</mat-label>
+                    <mat-select placeholder="Categorie / Grade">
+                        <mat-option></mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date d'embauche</mat-label>
+                    <input [matDatepicker]="hireDate" matInput="date" placeholder="Date d'embauche" />
+                    <mat-datepicker-toggle matSuffix [for]="hireDate"></mat-datepicker-toggle>
+                    <mat-datepicker #hireDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nom d'utilisateur</mat-label>
+                    <input matInput placeholder="Nom utilisateur" />
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Mot de passe</mat-label>
+                    <input matInput type="password" placeholder="Mot de passe" />
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Département</mat-label>
+                    <mat-select placeholder="Département">
+                        <mat-option>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Lieu de naissance</mat-label>
+                    <input matInput placeholder="Lieu de naissance" />
+                    <mat-icon matSuffix>home</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date de naissance</mat-label>
+                    <input matInput="date" placeholder="Date de naissance" />
+                    <mat-datepicker-toggle matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+                    <mat-datepicker #dateOfBirth></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- End of content loading -->
+
+        <br>
+        <div class="card-footer text-right">
+            <!-- <input type="submit" (click)="saveEmployee()" class="btn btn-primary" value="Enregistrer"> -->
+            <button mat-raised-button class="text-white" (click)="updateEmployee()" *ngIf="!loadingUpdate"
+                [ngStyle]="{'background-color': '#4fb8db'}">
+                <mat-icon>save</mat-icon>
+                Enregistrer
+            </button>
+            <button mat-raised-button class="text-white" *ngIf="loadingUpdate"
+                [ngStyle]="{'background-color': '#4fb8db'}">
+                <i class="pi pi-spin pi-spinner"></i>
+                Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+<p-toast key="infosUpdateEmp" position="top-right"></p-toast>

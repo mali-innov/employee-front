@@ -1,0 +1,9 @@
+mat-form-field{
+    width: 100%;
+}
+
+.form-control{
+input::selection{
+    border-color:#000 !important;
+}
+}
