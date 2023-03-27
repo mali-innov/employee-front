@@ -34,7 +34,7 @@ import { CardModule } from 'primeng/card';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { AccordionModule } from 'primeng/accordion';
 import { TooltipModule } from 'primeng/tooltip';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { InplaceModule } from 'primeng/inplace';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -64,6 +64,11 @@ import { PosteComponent } from './poste/poste.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthInterceptor } from './services/auth-interceptor';
 
+import { JwtModule } from '@auth0/angular-jwt';
+
+const storage: any | null = sessionStorage.getItem('TOKEN');
+const accessToken = JSON.parse(storage);
+const authToken = accessToken;
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
@@ -131,10 +136,19 @@ registerLocaleData(localeFr, 'fr');
     MatSortModule,
     MatRadioModule,
     MatMenuModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return authToken;
+        }
+      }
+    }),
   ],
   providers: [
     DialogService,
     MessageService,
+    ConfirmationService,
     {provide: LOCALE_ID, useValue: 'fr' },
     {
       provide: HTTP_INTERCEPTORS,

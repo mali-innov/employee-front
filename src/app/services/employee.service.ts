@@ -25,6 +25,10 @@ export class EmployeeService {
     return this.http.get(`${this.employeeApi}`)
   }
 
+  async findByIdAndState(id: number, state: string) {
+    return this.http.get(`${this.employeeApi}/${id}/state/${state}`)
+  }
+
   /**
    * Get employee by Id with activated state
    */
